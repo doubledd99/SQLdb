@@ -12,10 +12,12 @@ class SqlCommands {
 public:
 	SqlCommands();
 	~SqlCommands();
-	static int callBack(void* NotUsed, int argc, char** argv, char** azColName);
+	
 	int openDB();
-	bool sqlExec(sqlite3* db, const char* syntax, static int callback, char* zErrMsg);
+	bool sqlExec(sqlite3* DB, const char* syntax);
+	sqlite3* returnDB();
 private:
+	static int callBack(void* NotUsed, int argc, char** argv, char** azColName);
 	const char* filename;
 	sqlite3* db;
 	char* zErrMsg = 0;

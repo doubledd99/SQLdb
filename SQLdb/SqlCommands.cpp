@@ -1,11 +1,22 @@
 #include "SqlCommands.h"
-
+using namespace std;
+#include <iostream>
 
 SqlCommands::SqlCommands() {
 
 }
 SqlCommands::~SqlCommands() {
 
+}
+int SqlCommands::callBack(void* NotUsed, int argc, char** argv, char** azColName)
+{
+	int i;
+	for (i = 0; i < argc; i++) {
+		printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+	}
+	printf("\n");
+	cout << "WTF!";
+	return 0;
 }
 static int callBack(void* NotUsed, int argc, char** argv, char** azColName) {
     int i;
@@ -17,9 +28,7 @@ static int callBack(void* NotUsed, int argc, char** argv, char** azColName) {
 }
 
 int SqlCommands::openDB() {
-    sqlite3* db;
-    char* zErrMsg = 0;
-    int rc;
+    zErrMsg = 0;
     rc = sqlite3_open("testdb.db", &db);
 
     if (rc) {
@@ -32,8 +41,23 @@ int SqlCommands::openDB() {
     }
 }
 
-bool SqlCommands::sqlExec(sqlite3* db, const char* syntax, int callback, char* zErrMsg)
+bool SqlCommands::sqlExec(sqlite3* DB, const char* syntax)
 {
-    static int i = callBack();
-    rc = sqlite3_exec(db, syntax, int i = callBack() , 0, &zErrMsg);
+	rc = sqlite3_exec(db, sql, callBack, 0, &zErrMsg);
+	if (rc == SQLITE_OK)
+		cout << "success bro \n";
+	if (rc != SQLITE_OK) {
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+		return 1;
+	}
+	else {
+		fprintf(stdout, "Records created successfully\n");
+		return 0;
+	}
+}
+
+sqlite3* SqlCommands::returnDB()
+{
+	return db;
 }
