@@ -43,7 +43,7 @@ int SqlCommands::openDB() {
 
 bool SqlCommands::sqlExec(sqlite3* DB, const char* syntax)
 {
-	rc = sqlite3_exec(db, sql, callBack, 0, &zErrMsg);
+	rc = sqlite3_exec(db, syntax, callBack, 0, &zErrMsg);
 	if (rc == SQLITE_OK)
 		cout << "success bro \n";
 	if (rc != SQLITE_OK) {
