@@ -1,12 +1,50 @@
 #include "SqlCommands.h"
 using namespace std;
 #include <iostream>
+#include <string>
 
 SqlCommands::SqlCommands() {
 
 }
 SqlCommands::~SqlCommands() {
 
+}
+const char* SqlCommands::manualImput()
+{	//input = temp.c_str();
+	bool keepGoing = 1;
+	const char* input = "0";
+	string SQLstring;
+	string temp;
+	temp = "h";
+	for (int i = 0; keepGoing && i <= 1; i++) {
+		switch (i)
+		{
+		case 0:
+			SQLstring += "INSERT OR REPLACE INTO INVENTORY(NAME, PRICE) "  \
+				"VALUES('";
+			cout << "Enter an item's name: \n";
+			cin >> temp;
+			cout << endl;
+			SQLstring += temp;
+			break;
+		case 1:
+			SQLstring += "',";
+			cout << "Enter an item's price: \n";
+			cin >> temp;
+			SQLstring += temp;
+			SQLstring += ");";
+			break;
+
+		default:
+			cout << "ERROR \n";
+			break;
+		}
+		//if (i >= 1) {
+			input = SQLstring.c_str();
+		//}
+		
+	}
+	return input;
 }
 int SqlCommands::callBack(void* NotUsed, int argc, char** argv, char** azColName)
 {
