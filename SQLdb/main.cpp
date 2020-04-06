@@ -48,6 +48,7 @@ int main(int argc, char* argv[]) {
   //     fprintf(stdout, "Records created successfully\n");
   // }
 	SqlCommands one;
+	one.manualImput();
 	one.openDB();
 	one.sqlExec(one.returnDB(), sql);
     sqlite3_close(one.returnDB());

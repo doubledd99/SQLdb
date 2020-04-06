@@ -4,6 +4,11 @@
 #include "sqlite3.h"
 #include <stdio.h>
 
+struct newItems
+{
+	const char* sql;
+	newItems* next;
+};
 
 using namespace std;
 
@@ -12,7 +17,7 @@ class SqlCommands {
 public:
 	SqlCommands();
 	~SqlCommands();
-	
+	const char* manualImput();
 	int openDB();
 	bool sqlExec(sqlite3* DB, const char* syntax);
 	sqlite3* returnDB();
