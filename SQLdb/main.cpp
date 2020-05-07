@@ -18,7 +18,6 @@ int main(int argc, char* argv[]) {
   // sqlite3* db;
   // char* zErrMsg = 0;
   // int rc;
-  const char *sql;
   //  rc = sqlite3_open("testdb.db", &db);
 
   //  if (rc) {
@@ -31,14 +30,15 @@ int main(int argc, char* argv[]) {
   //  //SqlCommands one;
   //// rc = one.openDB();
   // 
-   sql = "INSERT OR REPLACE INTO INVENTORY (NAME,PRICE) "  \
-        "VALUES ('Hawkeye', 14.56); " \
+  string temporary = "INSERT OR REPLACE INTO INVENTORY (NAME,PRICE) VALUES ('Reds', 78.99); ";//Not used but could be used as syntax to enter information into DB
+  //sql = "INSERT OR REPLACE INTO INVENTORY (NAME,PRICE) VALUES ('kaci', 69.69); ";
+       /* \
         "INSERT OR REPLACE INTO INVENTORY (NAME,PRICE) "  \
         "VALUES ('Black Velvet', 10); "     \
         "INSERT OR REPLACE INTO INVENTORY (NAME,PRICE)" \
         "VALUES ('Fireball', 22);" \
         "INSERT OR REPLACE INTO INVENTORY (NAME,PRICE)" \
-        "VALUES ('Cherry MG', 12);";
+        "VALUES ('Cherry MG', 12);";*/
   // rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
   // if (rc != SQLITE_OK) {
   //     fprintf(stderr, "SQL error: %s\n", zErrMsg);
@@ -47,9 +47,19 @@ int main(int argc, char* argv[]) {
   // else {
   //     fprintf(stdout, "Records created successfully\n");
   // }
-	SqlCommands one;
-	one.manualImput();
-	one.openDB();
-	one.sqlExec(one.returnDB(), sql);
-    sqlite3_close(one.returnDB());
+	SqlCommands one; //creates object of type SqlCommands
+	//string sql = one.manualImput();
+	//one.openDB();
+ //  // const char* sqlcommand = sql.c_str();
+	////one.sqlExec(one.returnDB(), sqlcommand); 
+ //   one.displayMenu();
+ //   sqlite3_close(one.returnDB());
+
+    bool keepGoing = true; 
+    while (keepGoing) {
+        one.openDB();
+        one.displayMenu();
+        sqlite3_close(one.returnDB());
+        keepGoing = one.keepGoing();
+    }
 }
